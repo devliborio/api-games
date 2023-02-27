@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Banco de dados falso
-var DB = { 
+var DB = {
     games: [
 
         {
@@ -36,16 +36,17 @@ var DB = {
 }
 
 // EndPoints
-app.get("", () => {
-    
-});
+app.get("/games", (req, res) => {
+    res.statusCode  = 200; // Requisição foi feita com sucesso!
+    res.json(DB.games)
+})
 
-app.listen(9090, (err) => { 
+app.listen(9090, (err) => {
 
-    if(!err) {
-        console.log('Server is running on port 9090');
+    if (!err) {
+        console.log('API RUNNING!');
     } else {
-        console.log(err);
+        err.statusCode = 500;   
     }
-    
+
 });
