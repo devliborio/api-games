@@ -35,8 +35,17 @@ var DB = {
     ]
 }
 
+// EndPoints
+app.get("", () => {
+    
+});
 
+app.listen(9090, (err) => { 
 
-app.listen(9090, () => { 
-    console.log('Server is running on port 9090');
+    if(!err) {
+        console.log('Server is running on port 9090');
+    } else {
+        console.log(err);
+    }
+    
 });
