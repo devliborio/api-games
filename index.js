@@ -37,16 +37,39 @@ var DB = {
 
 // EndPoints
 app.get("/games", (req, res) => {
-    res.statusCode  = 200; // Requisição foi feita com sucesso!
+
+    res.statusCode = 200; // Requisição foi feita com sucesso!
     res.json(DB.games)
+
 })
+
+app.get("/games/:id", (req, res) => {
+
+    if (isNaN(req.params.id)) {
+        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+    } else {
+
+        var id = parseInt(req.params.id);
+
+        var games = DB.games.find(g => g.id == id);
+
+        if (games != undefined) {
+            res.statusCode = 200;
+            res.json(games);
+        } else {
+            res.sendStatus(404);
+        }
+        
+    }
+
+});
 
 app.listen(9090, (err) => {
 
     if (!err) {
         console.log('API RUNNING!');
     } else {
-        err.statusCode = 500;   
+        err.sendStatus(500);
     }
 
 });
