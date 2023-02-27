@@ -12,21 +12,21 @@ var DB = {
     games: [
 
         {
-            id: 21,
+            id: 1,
             title: 'Bayonetta ',
             year: 2009,
             price: 36
         },
 
         {
-            id: 32,
+            id: 2,
             title: 'Subnautica',
             year: 2014,
             price: 57
         },
 
         {
-            id: 45,
+            id: 3,
             title: 'Hogwarts Legacy',
             year: 2023,
             price: 250
@@ -43,7 +43,7 @@ app.get("/games", (req, res) => {
 
 })
 
-app.get("/games/:id", (req, res) => {
+app.get("/game/:id", (req, res) => {
 
     if (isNaN(req.params.id)) {
         res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
@@ -59,9 +59,27 @@ app.get("/games/:id", (req, res) => {
         } else {
             res.sendStatus(404);
         }
-        
+
     }
 
+});
+
+app.post("/game", (req, res) => {
+
+    var { title, price, year } = req.body; // Usando desestruturação
+
+    if (title == undefined || isNaN(price) || isNaN(year)) {
+        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+    } else {
+        DB.games.push({
+            id: DB.games.length + 1,
+            title: title,
+            year: year,
+            price: price
+
+        });
+        res.sendStatus(201);
+    }
 });
 
 app.listen(9090, (err) => {
@@ -73,3 +91,5 @@ app.listen(9090, (err) => {
     }
 
 });
+
+
