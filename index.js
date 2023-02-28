@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Banco de dados falso
-var DB = {
+let DB = {
     games: [
 
         {
@@ -49,9 +49,9 @@ app.get("/game/:id", (req, res) => {
         res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
     } else {
 
-        var id = parseInt(req.params.id);
+        let id = parseInt(req.params.id);
 
-        var games = DB.games.find(g => g.id == id);
+        let games = DB.games.find(g => g.id == id);
 
         if (games != undefined) {
             res.statusCode = 200;
@@ -66,29 +66,41 @@ app.get("/game/:id", (req, res) => {
 
 app.post("/game", (req, res) => {
 
-    var { title, price, year } = req.body; // Usando desestruturação
+    let { title, price, year } = req.body; // Usando desestruturação
 
-    if (title != undefined || price != undefined || year != undefined) {
-
-        if(isNaN(price) || isNaN(year)){
-            res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
-
-        } else {
-            
-            DB.games.push({
-                id: DB.games.length + 1,
-                title: title,
-                year: year,
-                price: price
-    
-            });
-        }
-        
-    } else {
-        
+    if (title == undefined || price == undefined || year == undefined) {
         res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
-        
+
+    } else {
+
+        DB.games.push({
+            id: DB.games.length + 1,
+            title: title,
+            price: price,
+            year: year
+        });
+        res.sendStatus(200);
     }
+});
+
+app.delete("/game/:id", (req, res) => {
+
+    if (isNaN(req.params.id)) {
+        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+
+    } else {
+
+        let id = parseInt(req.params.id);
+        let index = DB.games.findIndex(g => g.id == id);
+
+        if (index == -1) {
+            res.sendStatus(404); // Esse elemento que você está tentando deletar não existe.
+        } else {
+            DB.games.splice(index, 1);
+            res.sendStatus(200);
+        }
+    }
+
 });
 
 app.listen(9090, (err) => {
