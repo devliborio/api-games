@@ -69,18 +69,28 @@ app.post("/game", (req, res) => {
     let { title, price, year } = req.body; // Usando desestruturação
 
     if (title == undefined || price == undefined || year == undefined) {
-        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+        res.sendStatus(400);
+        return;  
+    } 
 
-    } else {
+    price = Number(price);
+    year = Number(year);
 
-        DB.games.push({
-            id: DB.games.length + 1,
-            title: title,
-            price: price,
-            year: year
-        });
-        res.sendStatus(200);
+    if (!price || !year) {
+        res.sendStatus(400);
+        return;
     }
+
+    DB.games.push({
+
+        id: DB.games.length + 1,
+        title,
+        price,
+        year
+
+    });
+
+    res.sendStatus(201);
 });
 
 app.put("/game/:id", (req, res) => {
@@ -111,7 +121,7 @@ app.put("/game/:id", (req, res) => {
                 }
             }
 
-            if (year != undefined) {    
+            if (year != undefined) {
 
                 if (isNaN(year)) {
                     res.sendStatus(400);
