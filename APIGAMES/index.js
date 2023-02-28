@@ -70,8 +70,8 @@ app.post("/game", (req, res) => {
 
     if (title == undefined || price == undefined || year == undefined) {
         res.sendStatus(400);
-        return;  
-    } 
+        return;
+    }
 
     price = Number(price);
     year = Number(year);
@@ -95,50 +95,26 @@ app.post("/game", (req, res) => {
 
 app.put("/game/:id", (req, res) => {
 
+    let id = Number(req.params.id);
+    let games = DB.games.find(g => g.id == id);
+    let { title, price, year } = req.body;
 
     if (isNaN(req.params.id)) {
         res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
-    } else {
-
-        let id = parseInt(req.params.id);
-
-        let games = DB.games.find(g => g.id == id);
-
-        if (games != undefined) {
-
-            let { title, price, year } = req.body;
-
-            if (title != undefined) {
-                games.title = title;
-            }
-
-            if (price != undefined) {
-
-                if (isNaN(price)) {
-                    res.sendStatus(400);
-                } else {
-                    games.price = price;
-                }
-            }
-
-            if (year != undefined) {
-
-                if (isNaN(year)) {
-                    res.sendStatus(400);
-                } else {
-                    games.year = year;
-                }
-
-            }
-
-            res.sendStatus(200);
-
-        } else {
-            res.sendStatus(404);
-        }
-
+        return;
     }
 
+    if (title == undefined && price == undefined && year == undefined) {
+        res.sendStatus(400)
+    } else {
+
+        games.title = title;
+        games.price = price;
+        games.year = year;
+
+        res.sendStatus(201);
+    }
+    
 });
 
 app.delete("/game/:id", (req, res) => {
@@ -151,8 +127,8 @@ app.delete("/game/:id", (req, res) => {
         let id = parseInt(req.params.id);
         let index = DB.games.findIndex(g => g.id == id);
 
-        if (index == -1) {
-            res.sendStatus(404); // Esse elemento que você está tentando deletar não existe.
+        if (index == -1) { // Esse elemento que você está tentando deletar não existe.
+            res.sendStatus(404);
         } else {
             DB.games.splice(index, 1);
             res.sendStatus(200);
