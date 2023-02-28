@@ -1,13 +1,10 @@
-// Express.js
 const express = require('express');
 const app = express();
 
-// Body-Parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Banco de dados falso
 let DB = {
     games: [
 
@@ -35,10 +32,9 @@ let DB = {
     ]
 }
 
-// EndPoints
 app.get("/games", (req, res) => {
 
-    res.statusCode = 200; // Requisição foi feita com sucesso!
+    res.statusCode = 200;
     res.json(DB.games)
 
 })
@@ -46,7 +42,7 @@ app.get("/games", (req, res) => {
 app.get("/game/:id", (req, res) => {
 
     if (isNaN(req.params.id)) {
-        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+        res.sendStatus(400);
     } else {
 
         let id = parseInt(req.params.id);
@@ -66,7 +62,7 @@ app.get("/game/:id", (req, res) => {
 
 app.post("/game", (req, res) => {
 
-    let { title, price, year } = req.body; // Usando desestruturação
+    let { title, price, year } = req.body;
 
     if (title == undefined || price == undefined || year == undefined) {
         res.sendStatus(400);
@@ -100,7 +96,7 @@ app.put("/game/:id", (req, res) => {
     let { title, price, year } = req.body;
 
     if (isNaN(req.params.id)) {
-        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+        res.sendStatus(400);
         return;
     }
 
@@ -114,20 +110,20 @@ app.put("/game/:id", (req, res) => {
 
         res.sendStatus(201);
     }
-    
+
 });
 
 app.delete("/game/:id", (req, res) => {
 
     if (isNaN(req.params.id)) {
-        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+        res.sendStatus(400);
 
     } else {
 
         let id = parseInt(req.params.id);
         let index = DB.games.findIndex(g => g.id == id);
 
-        if (index == -1) { // Esse elemento que você está tentando deletar não existe.
+        if (index == -1) {
             res.sendStatus(404);
         } else {
             DB.games.splice(index, 1);
