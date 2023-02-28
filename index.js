@@ -83,6 +83,54 @@ app.post("/game", (req, res) => {
     }
 });
 
+app.put("/game/:id", (req, res) => {
+
+
+    if (isNaN(req.params.id)) {
+        res.sendStatus(400); // Enviando statusCode para notificar erro de sintaxe incorreta.
+    } else {
+
+        let id = parseInt(req.params.id);
+
+        let games = DB.games.find(g => g.id == id);
+
+        if (games != undefined) {
+
+            let { title, price, year } = req.body;
+
+            if (title != undefined) {
+                games.title = title;
+            }
+
+            if (price != undefined) {
+
+                if (isNaN(price)) {
+                    res.sendStatus(400);
+                } else {
+                    games.price = price;
+                }
+            }
+
+            if (year != undefined) {    
+
+                if (isNaN(year)) {
+                    res.sendStatus(400);
+                } else {
+                    games.year = year;
+                }
+
+            }
+
+            res.sendStatus(200);
+
+        } else {
+            res.sendStatus(404);
+        }
+
+    }
+
+});
+
 app.delete("/game/:id", (req, res) => {
 
     if (isNaN(req.params.id)) {
