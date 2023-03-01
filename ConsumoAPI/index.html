@@ -30,55 +30,9 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script>
-
-    function createGame() {
-        let titleInput = document.getElementById("title");
-        let priceInput = document.getElementById("price");
-        let yearInput = document.getElementById("year");
-
-        let game = {
-            title: titleInput.value,
-            price: priceInput.value,
-            year: yearInput.value
-        }
-        axios.post("http://localhost:9090/game", game).then((response) => {
-
-            if (response.status == 201) {
-                alert("Game cadastrado!")
-            }
-
-        }).catch((erro) => {
-            console.log(erro);
-
-        })
-    }
-
-    axios.get("http://localhost:9090/games").then((response) => {
-
-        let games = response.data;
-        let list = document.getElementById("games");
-
-        games.forEach((game) => {
-
-            let item = document.createElement("li");
-            item.classList.add("list-group-item");
-            item.innerHTML = game.id + " - " + game.title + " - R$ " + game.price;
-            list.appendChild(item);
-
-        });
-
-    }).catch((error) => {
-        console.log(error);
-    })
-
-</script>
+<script src="script/script.js"></script>
 
 </html>
