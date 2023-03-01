@@ -31,7 +31,23 @@ let DB = {
             year: 2023,
             price: 250
         },
+    ],
 
+    users: [
+
+        {
+            id: 1,
+            name: "Guilherme Libório Machado",
+            email: "liborio.ofc@gmail.com",
+            password: "nodejs<3"
+        },
+
+        {
+            id: 2,
+            name: "Victor",
+            email: "victor.gg@gmail.com",
+            password: "python<3"
+        },
     ]
 }
 
@@ -134,6 +150,26 @@ app.delete("/game/:id", (req, res) => {
         }
     }
 
+});
+
+app.post("/auth", (req, res) => {
+    let = { email, password } = req.body;
+    let user = DB.users.find(u => u.email == email);
+
+    if (user == undefined) {
+        res.status(404);
+        res.json({ err: "E-mail não existe na base de dados!" });
+        return;
+    }     
+    
+    if (user.password == password) {
+        res.status(200);
+        res.json({ token: "TOKEN FALSO!" });
+
+    } else {
+        res.status(401);
+        res.json({ err: "Credenciais inválidas!" });
+    }
 });
 
 app.listen(9090, (err) => {
