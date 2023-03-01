@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
+const jwt = require('jsonwebtoken');
 app.use(cors());
 
 const bodyParser = require('body-parser');
