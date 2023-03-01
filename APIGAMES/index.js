@@ -4,7 +4,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 app.use(cors());
 
-const JWTSecrete = "duiwqhdjklsankdlkasn2131@3489749812$@$(&*(*($%@*kdsandklsa";
+const JWTSecret = "duiwqhdjklsankdlkasn2131@3489749812$@$(&*(*($%@*kdsandklsa";
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -53,14 +53,40 @@ let DB = {
     ]
 }
 
-app.get("/games", (req, res) => {
+function adminAuth(req, res, next) {
+    const authToken = req.headers['authorization'];
+
+    if (authToken != undefined) {
+
+        const bearer = authToken.split(' ');
+        let token = bearer[1];
+
+        jwt.verify(token, JWTSecret, (err, data) => {
+            if (err) {
+                res.status(401);
+                res.json({ message: "Token inválido!" })
+            } else {
+                req.token = token;
+                req.loggedUser = { id: data.id, email: data.email };
+                next();
+            }
+        });
+
+    } else {
+        res.status(401);
+        res.json({ error: "Token inválido" });
+    }
+}
+
+
+app.get("/games", adminAuth, (req, res) => {
 
     res.statusCode = 200;
-    res.json(DB.games)
+    res.json({ user: req.loggedUser, games: DB.games })
 
 })
 
-app.get("/game/:id", (req, res) => {
+app.get("/game/:id", adminAuth, (req, res) => {
 
     if (isNaN(req.params.id)) {
         res.sendStatus(400);
@@ -81,7 +107,7 @@ app.get("/game/:id", (req, res) => {
 
 });
 
-app.post("/game", (req, res) => {
+app.post("/game", adminAuth, (req, res) => {
 
     let { title, price, year } = req.body;
 
@@ -110,7 +136,7 @@ app.post("/game", (req, res) => {
     res.sendStatus(201);
 });
 
-app.put("/game/:id", (req, res) => {
+app.put("/game/:id", adminAuth, (req, res) => {
 
     let id = Number(req.params.id);
     let games = DB.games.find(g => g.id == id);
@@ -134,7 +160,7 @@ app.put("/game/:id", (req, res) => {
 
 });
 
-app.delete("/game/:id", (req, res) => {
+app.delete("/game/:id", adminAuth, (req, res) => {
 
     if (isNaN(req.params.id)) {
         res.sendStatus(400);
@@ -166,14 +192,14 @@ app.post("/auth", (req, res) => {
 
     if (user.password == password) {
 
-        jwt.sign({ id: user.id, email: user.email }, JWTSecrete, { expiresIn: "48h" }, (err, token) => {
+        jwt.sign({ id: user.id, email: user.email }, JWTSecret, { expiresIn: "48h" }, (err, token) => {
             if (err) {
                 res.status(400);
                 res.json({ error: "Falha interna" });
                 return;
             }
             res.status(200);
-            res.json({ token: token});
+            res.json({ token: token });
         }); //payload
 
     } else {
@@ -191,5 +217,3 @@ app.listen(9090, (err) => {
     }
 
 });
-
-
