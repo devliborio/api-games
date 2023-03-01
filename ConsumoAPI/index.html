@@ -17,13 +17,24 @@
         <input class="btn btn btn-success btn-sm mb-3" type="button" value="Atualizar" onclick="window.location.reload()">
         <ul class="list-group" id="games"></ul>
         <hr>
-        <h4>Novo game</h4><br>
+        <h4>Cadastrar game</h4><br>
 
         <div class="form-group">
             <input class="form-control" name="title" type="text" id="title" placeholder="Digite o título do game"><br>
             <input class="form-control" type="number" name="year" id="year" placeholder="Digite o ano de de lançamento do game"><br>
             <input class="form-control" type="number" name="price" id="price" placeholder="Digite o preço do game"><br>
             <button class="btn btn-success btn-sm"type="button" onclick="createGame()">Adicionar</button>
+        </div>
+        <hr>
+
+        <h4>Editar game</h4><br>
+        <div class="form-group">
+
+            <input class="form-control" name ="titleEdit" id="titleEdit" type="text" placeholder="Digite o novo título do game"><br>
+            <input class="form-control" name ="yearEdit" id="yearEdit"   type="number" placeholder="Digite o novo ano de lançamento"><br>
+            <input class="form-control" name ="priceEdit" id="priceEdit" type="number" placeholder="Digite o novo preço"><br>
+            <button class="btn btn-warning"type="button" onclick="" >Editar</button><br>
+
         </div>
 
     </div>
