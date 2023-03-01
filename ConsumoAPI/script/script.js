@@ -28,7 +28,13 @@ axios.get("http://localhost:9090/games").then((response) => {
     games.forEach((game) => {
 
         let item = document.createElement("li");
+        
         item.classList.add("list-group-item");
+        item.setAttribute("data-id",game.id);
+        item.setAttribute("data-title",game.title);
+        item.setAttribute("data-price",game.price);
+        item.setAttribute("data-year",game.year);
+
         item.innerHTML = game.id + " - " + game.title + " - R$ " + game.price;
         list.appendChild(item);
 
