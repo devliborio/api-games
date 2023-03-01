@@ -20,6 +20,11 @@ function createGame() {
     })
 }
 
+function deleteGame(listItem) {
+    let id = listItem.getAttribute("data-id");
+    console.log(id)
+}
+
 axios.get("http://localhost:9090/games").then((response) => {
 
     let games = response.data;
@@ -28,14 +33,24 @@ axios.get("http://localhost:9090/games").then((response) => {
     games.forEach((game) => {
 
         let item = document.createElement("li");
-        
+
         item.classList.add("list-group-item");
-        item.setAttribute("data-id",game.id);
-        item.setAttribute("data-title",game.title);
-        item.setAttribute("data-price",game.price);
-        item.setAttribute("data-year",game.year);
+        item.setAttribute("data-id", game.id);
+        item.setAttribute("data-title", game.title);
+        item.setAttribute("data-price", game.price);
+        item.setAttribute("data-year", game.year);
 
         item.innerHTML = game.id + " - " + game.title + " - R$ " + game.price;
+
+        let deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Deletar";
+        deleteButton.addEventListener("click", function () {
+            deleteGame(item);
+        });
+        deleteButton.classList.add("btn", "btn-danger", "btn-sm", "ml-3");
+
+        item.appendChild(deleteButton);
+
         list.appendChild(item);
 
     });
