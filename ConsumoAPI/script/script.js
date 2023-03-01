@@ -22,7 +22,13 @@ function createGame() {
 
 function deleteGame(listItem) {
     let id = listItem.getAttribute("data-id");
-    console.log(id)
+    axios.delete("http://localhost:9090/game/" + id).then((response) => {
+
+        alert("Game deletado!");
+
+    }).catch((err) => {
+        console.log(err);
+    });
 }
 
 axios.get("http://localhost:9090/games").then((response) => {
