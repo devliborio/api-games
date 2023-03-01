@@ -30,10 +30,11 @@
         <h4>Editar game</h4><br>
         <div class="form-group">
 
+            <input class="form-control" type="text" name="idEdit" id="idEdit" placeholder="ID" readonly><br>
             <input class="form-control" name ="titleEdit" id="titleEdit" type="text" placeholder="Digite o novo título do game"><br>
             <input class="form-control" name ="yearEdit" id="yearEdit"   type="number" placeholder="Digite o novo ano de lançamento"><br>
             <input class="form-control" name ="priceEdit" id="priceEdit" type="number" placeholder="Digite o novo preço"><br>
-            <button class="btn btn-warning"type="button" onclick="" >Editar</button><br>
+            <button class="btn btn-warning"type="button" onclick="updateGame()" >Editar</button><br>
 
         </div>
 
