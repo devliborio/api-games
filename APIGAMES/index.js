@@ -4,6 +4,8 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 app.use(cors());
 
+const JWTSecrete = "duiwqhdjklsankdlkasn2131@3489749812$@$(&*(*($%@*kdsandklsa";
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -160,11 +162,19 @@ app.post("/auth", (req, res) => {
         res.status(404);
         res.json({ err: "E-mail não existe na base de dados!" });
         return;
-    }     
-    
+    }
+
     if (user.password == password) {
-        res.status(200);
-        res.json({ token: "TOKEN FALSO!" });
+
+        jwt.sign({ id: user.id, email: user.email }, JWTSecrete, { expiresIn: "48h" }, (err, token) => {
+            if (err) {
+                res.status(400);
+                res.json({ error: "Falha interna" });
+                return;
+            }
+            res.status(200);
+            res.json({ token: token});
+        }); //payload
 
     } else {
         res.status(401);
