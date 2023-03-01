@@ -6,17 +6,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja de games</title>
+    <link rel="stylesheet" href="./public/css/bootstrap.min.css">
 </head>
 
 <body>
 
+    <div class="container">
+        <hr>
+        <h4>Lista de games</h4><br>
+        <input class="btn btn btn-success btn-sm mb-3" type="button" value="Atualizar" onclick="window.location.reload()">
+        <ul class="list-group" id="games"></ul>
+        <hr>
+        <h4>Novo game</h4><br>
+
+        <div class="form-group">
+            <input class="form-control" name="title" type="text" id="title" placeholder="Digite o título do game"><br>
+            <input class="form-control" type="number" name="year" id="year" placeholder="Digite o ano de de lançamento do game"><br>
+            <input class="form-control" type="number" name="price" id="price" placeholder="Digite o preço do game"><br>
+            <button class="btn btn-success btn-sm"type="button" onclick="createGame()">Adicionar</button>
+        </div>
+
+    </div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="/js/bootstrap.min.js"></script>
 <script>
 
+    function createGame() {
+        let titleInput = document.getElementById("title");
+        let priceInput = document.getElementById("price");
+        let yearInput = document.getElementById("year");
+
+        let game = {
+            title: titleInput.value,
+            price: priceInput.value,
+            year: yearInput.value
+        }
+        axios.post("http://localhost:9090/game", game).then((response) => {
+
+            if (response.status == 201) {
+                alert("Game cadastrado!")
+            }
+
+        }).catch((erro) => {
+            console.log(erro);
+
+        })
+    }
+
     axios.get("http://localhost:9090/games").then((response) => {
-        console.log(response);
+
+        let games = response.data;
+        let list = document.getElementById("games");
+
+        games.forEach((game) => {
+
+            let item = document.createElement("li");
+            item.classList.add("list-group-item");
+            item.innerHTML = game.id + " - " + game.title + " - R$ " + game.price;
+            list.appendChild(item);
+
+        });
+
     }).catch((error) => {
         console.log(error);
     })
