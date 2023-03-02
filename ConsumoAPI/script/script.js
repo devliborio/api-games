@@ -5,6 +5,29 @@ let axiosConfig = { // Definindo variável que vai armazenar o Token de autentic
     }
 }
 
+function login() {
+    let emailField = document.getElementById("email");
+    let passwordField = document.getElementById("password");
+
+    let email = emailField.value;
+    let password = passwordField.value;
+
+    axios.post("http://localhost:9090/auth",{
+        email,
+        password
+
+    }).then((response) => {
+        let token = response.data.token;
+        if(response.status = 201){
+            alert("Login efetuado com sucesso!");
+        }
+
+    }).catch((erro) => {
+        console.log(erro)
+        alert("Erro ao tentar realizar o login!")
+    })
+}
+
 function createGame() { // Aqui basicamente criamos uma função que é responsável por criar um novo game na dentro array de games da nossa API.
     let titleInput = document.getElementById("title"); // Basicamente definimos essa variável para pegar o ID do input do titulo do game.
     let priceInput = document.getElementById("price"); // Basicamente definimos essa variável para pegar o ID do input do preço do game.
@@ -49,7 +72,7 @@ function updateGame() { // Função que edita os campos de titulo, preço e ano 
     let idInput = document.getElementById("idEdit") // Aqui usamos o DOM para trazer o input de ID para o JS.
     let id = idInput.value // E armazenamos o valor do ID nessa variável.
     // Essas 3 variáveis abaixo só usamos para trazer os inputs do HTML para o JS.
-    let titleInput = document.getElementById("titleEdit"); 
+    let titleInput = document.getElementById("titleEdit");
     let priceInput = document.getElementById("priceEdit");
     let yearInput = document.getElementById("yearEdit");
 
@@ -84,7 +107,7 @@ function deleteGame(listItem) { // Função de deleção de game, essa função 
     });
 }
 
-axios.get("http://localhost:9090/games",axiosConfig).then((response) => { // Usando o axios para consumir a rota de listagem de games, usando promise.
+axios.get("http://localhost:9090/games", axiosConfig).then((response) => { // Usando o axios para consumir a rota de listagem de games, usando promise.
 
     let games = response.data; // Aqui pegamos os dados dos games lá da API, o JSON no caso (ID ,titulo, preço e ano de lançamento)
     let list = document.getElementById("games"); // Aqui estamos usando DOM para pegar a <ul> do HTML.
