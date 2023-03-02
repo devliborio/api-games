@@ -89,7 +89,7 @@ function adminAuth(req, res, next) { // Função middleware que faz a logica de 
 app.get("/games", adminAuth, (req, res) => { // Rota get() para pegar o array de games e retornar para o usuário, caso ele passe pelas etapas de autenticação.
 
     res.statusCode = 200; // Caso ele passe na autenticação, retorna o statusCode 200 (Ok!)
-    res.json({ user: req.loggedUser, games: DB.games }) // E retorna um JSON com os dados que armazenamentos na variável req.loggedUser, email e ID, juntamente com os JSON dos games.
+    res.json({ user: req.loggedUser, games: DB.games }) // E retorna um JSON com os dados que armazenamos na variável req.loggedUser, email e ID, juntamente com os JSON dos games.
 
 })
 
