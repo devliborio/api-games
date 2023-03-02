@@ -1,3 +1,10 @@
+let axiosConfig = { // Definindo variável que vai armazenar o Token de autenticação para que nossa pagina HTML possa consumir a API rest de games.
+
+    headers: {
+        Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsaWJvcmlvLm9mY0BnbWFpbC5jb20iLCJpYXQiOjE2Nzc3ODg4NjQsImV4cCI6MTY3Nzk2MTY2NH0.qnpmSC8a1DYne3R0KGvdY_A0fQ3ADOXbk6wassj3FO4"
+    }
+}
+
 function createGame() { // Aqui basicamente criamos uma função que é responsável por criar um novo game na dentro array de games da nossa API.
     let titleInput = document.getElementById("title"); // Basicamente definimos essa variável para pegar o ID do input do titulo do game.
     let priceInput = document.getElementById("price"); // Basicamente definimos essa variável para pegar o ID do input do preço do game.
@@ -9,7 +16,7 @@ function createGame() { // Aqui basicamente criamos uma função que é respons�
         year: yearInput.value
     }
 
-    axios.post("http://localhost:9090/game", game).then((response) => { // Enviando via axios os dados armazenados na variável game
+    axios.post("http://localhost:9090/game", game, axiosConfig).then((response) => { // Enviando via axios os dados armazenados na variável game
 
         if (response.status == 201) { // Aqui fazemos uma verificação caso o statusCode seja 201 (criado!) enviamos um alert na tela do usuário dizendo que o game foi cadastrado!
             alert("Game cadastrado!")
@@ -52,7 +59,7 @@ function updateGame() { // Função que edita os campos de titulo, preço e ano 
         year: yearInput.value
     }
 
-    axios.put("http://localhost:9090/game/" + id, game).then((response) => { // Usamos o axios, para enviar o ID do game que queremos editar, e os dados que vão ser editados.
+    axios.put("http://localhost:9090/game/" + id, game, axiosConfig).then((response) => { // Usamos o axios, para enviar o ID do game que queremos editar, e os dados que vão ser editados.
 
         if (response.status == 201) { // Caso ocorra tudo certo e o statusCode seja igual a 201 (Criado!) enviamos um alert para o usuário.
             alert("Game Editado!")
@@ -67,7 +74,7 @@ function updateGame() { // Função que edita os campos de titulo, preço e ano 
 
 function deleteGame(listItem) { // Função de deleção de game, essa função recebe como parâmetro uma variável chamada listItem que basicamente é o game.
     let id = listItem.getAttribute("data-id"); // Criamos uma variável para armazenar o ID que buscamos através do método getAttribute().
-    axios.delete("http://localhost:9090/game/" + id).then((response) => { // Aqui nos usamos o axios para enviar o ID buscamos na variável acima para a rota de deleção da API.
+    axios.delete("http://localhost:9090/game/" + id, axiosConfig).then((response) => { // Aqui nos usamos o axios para enviar o ID buscamos na variável acima para a rota de deleção da API.
 
         alert("Game deletado!"); //  Caso a exclusão dê certo nos usamos enviamos um alerta para o usuário notificando que o game foi deletado!
 
@@ -77,7 +84,7 @@ function deleteGame(listItem) { // Função de deleção de game, essa função 
     });
 }
 
-axios.get("http://localhost:9090/games").then((response) => { // Usando o axios para consumir a rota de listagem de games, usando promise.
+axios.get("http://localhost:9090/games",axiosConfig).then((response) => { // Usando o axios para consumir a rota de listagem de games, usando promise.
 
     let games = response.data; // Aqui pegamos os dados dos games lá da API, o JSON no caso (ID ,titulo, preço e ano de lançamento)
     let list = document.getElementById("games"); // Aqui estamos usando DOM para pegar a <ul> do HTML.
@@ -118,4 +125,4 @@ axios.get("http://localhost:9090/games").then((response) => { // Usando o axios 
 
 }).catch((error) => {
     console.log(error);
-})
+});
