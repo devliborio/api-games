@@ -32,7 +32,7 @@
             <input class="form-control" name="title" type="text" id="title" placeholder="Digite o título do game"><br>
             <input class="form-control" type="number" name="year" id="year" placeholder="Digite o ano de de lançamento do game"><br>
             <input class="form-control" type="number" name="price" id="price" placeholder="Digite o preço do game"><br>
-            <button class="btn btn-success btn-sm"type="button" onclick="createGame()">Adicionar</button>
+            <button class="btn btn-success btn-sm"type="button" onclick="createGame(); window.location.reload()">Adicionar</button>
         </div>
         <hr>
 
@@ -43,7 +43,7 @@
             <input class="form-control" name ="titleEdit" id="titleEdit" type="text" placeholder="Digite o novo título do game"><br>
             <input class="form-control" name ="yearEdit" id="yearEdit"   type="number" placeholder="Digite o novo ano de lançamento"><br>
             <input class="form-control" name ="priceEdit" id="priceEdit" type="number" placeholder="Digite o novo preço"><br>
-            <button class="btn btn-warning btn-sm" type="button" onclick="updateGame()" >Editar</button><br>
+            <button class="btn btn-warning btn-sm" type="button" onclick="updateGame(); window.location.reload()" >Editar</button><br>
 
         </div>
 
