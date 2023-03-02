@@ -1,26 +1,26 @@
 let axiosConfig = { // Definindo variável que vai armazenar o Token de autenticação para que nossa pagina HTML possa consumir a API rest de games.
 
     headers: {
-        Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsaWJvcmlvLm9mY0BnbWFpbC5jb20iLCJpYXQiOjE2Nzc3ODg4NjQsImV4cCI6MTY3Nzk2MTY2NH0.qnpmSC8a1DYne3R0KGvdY_A0fQ3ADOXbk6wassj3FO4"
+        Authorization: "Bearer " + localStorage.getItem("Token")
     }
 }
 
-function login() {
-    let emailField = document.getElementById("email");
-    let passwordField = document.getElementById("password");
+function login() { // Função que estrutura toda lógica de login para se autenticar com a API.
+    let emailField = document.getElementById("email"); // Usando o DOM para trazer o input de email para o JS.
+    let passwordField = document.getElementById("password"); // Usando o DOM para trazer o input de senha para o JS.
 
-    let email = emailField.value;
-    let password = passwordField.value;
+    let email = emailField.value; // Pegando o e-mail que o digita no campo de e-mail.
+    let password = passwordField.value; // Pegando o a senha que o usuário digita no campo de password.
 
-    axios.post("http://localhost:9090/auth",{
+    axios.post("http://localhost:9090/auth",{ // Usando o axios para enviar os dados de email e senha para rota de autenticação.
         email,
         password
 
-    }).then((response) => {
-        let token = response.data.token;
-        if(response.status = 201){
-            alert("Login efetuado com sucesso!");
-        }
+    }).then((response) => { // Caso ocorra tudo certo vamos realizar o envio de um alerta de login efetuado com sucesso para o usuário. ao mesmo tempo que iremos armazenar o token que foi enviado pelo servidor no local storage do navegador.
+
+        
+        let token = response.data.token; // Aqui pegamos o token enviado pelo servidor e armazenamos na variável token.
+        localStorage.setItem("Token", token); // Aqui armazenamos o token enviado pelo servidor no local storage do navegador.
 
     }).catch((erro) => {
         console.log(erro)
