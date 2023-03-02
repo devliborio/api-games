@@ -133,7 +133,7 @@ app.post("/game", adminAuth, (req, res) => { // Rota post() para criar um novo g
         return;
     }
 
-    DB.games.push({ // Caso tudo seja valido, e passe pelas validações necessárias corretamente, ele você ira enviar para o array de games, o seu JSON corretamente, acrescentando um ID baseado na quantidade de indicies desse array + 1.
+    DB.games.push({ // Caso tudo seja valido, e passe pelas validações necessárias corretamente, você ira enviar para o array de games, o seu JSON corretamente, acrescentando um ID baseado na quantidade de indicies desse array + 1.
 
         id: DB.games.length + 1,
         title,
