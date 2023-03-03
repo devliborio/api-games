@@ -129,6 +129,7 @@ axios.get("http://localhost:9090/games", axiosConfig).then((response) => { // Us
         deleteButton.innerHTML = "Deletar"; // Escrevemos dinamicamente no corpo do botão a palavra "Deletar".
         deleteButton.addEventListener("click", function () { // Aqui definimos um evento de click no botão, então todas vez que ele é clicado a função deleteGame() é chamada e executada. 
             deleteGame(item);
+            window.location.reload();
         });
 
 
