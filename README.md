@@ -102,6 +102,10 @@
 
 - Para criar o TOKEN de autenticação (JWT) é preciso passar um e-mail e senha validos para essa rota. Se os dados estiverem validados corretamente ele irá te retornar o TOKEN e você poderá se autenticar com ele.
 
-
+- Exemplo de resposta: 
+ 
+      {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsaWJvcmlvLm9mY0BnbWFpbC5jb20iLCJpYXQiOjE2NzgxMjgyODcsImV4cCI6MTY3ODMwMTA4N30.fr7Gh5jJRCc5XGyTUsJ2RLVSiPdRsc6TxvHnQITjOBE"
+      }
 
 
