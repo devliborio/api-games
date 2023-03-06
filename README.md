@@ -87,7 +87,7 @@ Está API foi desenvolvida a fins de estudos, onde eu realizei diversos testes e
 
 - Para editar um game já existente, você escolhe se prefere editar todos os campos, ou somente um campo, após feita a edição as alterações são empurradas diretamente para a rota GET /games onde são retornados todos os games.
 
-#### Rota para criação de um novo game
+#### Rota para deleção um novo game
 
 ```http
   DELETE /game
@@ -104,6 +104,10 @@ Está API foi desenvolvida a fins de estudos, onde eu realizei diversos testes e
 ```http
   POST /auth
 ```
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `email`      | `string` | **Obrigatório**. O e-mail cadastrado no array de usuários do banco de dados falso, sem ele não terá como gerar o token|
+| `password`      | `string` | **Obrigatório**. A senha que foi cadastrada no banco de dados falso, sem ela não tem como gerar o token|
 
 - Para criar o TOKEN de autenticação (JWT) é preciso passar um e-mail e senha validos para essa rota. Se os dados estiverem validados corretamente ele irá te retornar o TOKEN e você poderá se autenticar com ele.
 
