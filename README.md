@@ -1,7 +1,7 @@
 
 ## Documentação da API
 
-Está API foi desenvolvida a fins de estudos, onde eu realizei diversos testes e pude consumir ela através do axios, ela não possui um banco de dados real, ou seja as informações que ela armazena são mutaveis apenas equanto a API está online, após o desligamento ou reinicialização do mesmo os dados são retornados ou descartados caso eles tenham sido criados. Dito isso ela não serve para casos reais, serve somente para demonstrar os conhecimentos que eu pude desenvolver ao criar essa API.
+Está API foi desenvolvida a fins de estudos, onde eu realizei diversos testes e pude consumir ela através do axios, ela não possui um banco de dados real, ou seja as informações que ela armazena são mutáveis apenas enquanto a API está online, após o desligamento ou reinicialização do mesmo os dados são retornados ou descartados caso eles tenham sido criados. Dito isso ela não serve para casos reais, serve somente para demonstrar os conhecimentos que eu pude desenvolver ao criar essa API.
 
 ---
 
