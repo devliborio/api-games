@@ -89,7 +89,7 @@ function adminAuth(req, res, next) { // Função middleware que faz a logica de 
 app.get("/games", adminAuth, (req, res) => { // Rota get() para pegar o array de games e retornar para o usuário, caso ele passe pelas etapas de autenticação.
 
     res.status(200) // Caso ele passe na autenticação, retorna o statusCode 200 (Ok!)
-    res.json(DB.games) // E retorna um JSON com os dados que armazenamos na variável req.loggedUser, email e ID, juntamente com os JSON dos games.
+    res.json(DB.games); // E retorna um JSON com os dados que armazenamos na variável req.loggedUser, email e ID, juntamente com os JSON dos games.
 
 })
 
@@ -102,11 +102,44 @@ app.get("/game/:id", adminAuth, (req, res) => { // Rota get() para pegar dentro 
     } else { // Agora caso o ID seja um número...
 
         let id = parseInt(req.params.id); // Criamos uma variável para armazenar o valor do ID vindo da url convertido para número inteiro, caso venha desse jeito "2".
+
+        let HATEOAS = [
+            {
+                href: "http://localhost:9090/games",
+                method: "GET",
+                rel: "get_games"
+            },
+
+            {
+                href: "http://localhost:9090/game/" + id,
+                method: "GET",
+                rel: "get_game"
+            },
+
+            {
+                href: "http://localhost:9090/game",
+                method: "POST",
+                rel: "post_game"
+            },
+
+            {
+                href: "http://localhost:9090/game/" + id,
+                method: "PUT",
+                rel: "edit_game"
+            },
+
+            {
+                href: "http://localhost:9090/game/" + id,
+                method: "DELETE",
+                rel: "delete_game"
+            }
+        ]
+
         let game = DB.games.find((gameItem) => gameItem.id == id); // Aqui criamos uma variável onde ela faz uma busca no banco de dados, onde verificamos se o ID recebido pelo cliente bate com o ID do nosso banco de dados. Ou seja, se ela enviou o ID 2 para ver um jogo em especifico, o jogo em especifico tem que ter o mesmo ID 2, caso não tenha, ele entra no ELSE que está logo abaixo.
 
         if (game != undefined) { // Aqui fazemos uma validação do ID recebido da variável game, se recebermos um ID de fato valido, entramos no IF.
-            res.statusCode = 200;
-            res.json(game);
+            res.sendStatus = 200;
+            res.json({ game, _links: HATEOAS });
         } else { // Caso seja invalido entramos no ELSE que basicamente só retorna um erro de Não encontrado.
             res.status(404);
             res.json({ message: "Nenhum game com esse ID foi encontrado no nosso banco de dados!" });
